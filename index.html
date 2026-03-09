@@ -1,0 +1,2231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Estudio - Metodología de Diseño y Gestión de Proyectos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e88e5;
+            --secondary: #0d47a1;
+            --accent: #00acc1;
+            --success: #43a047;
+            --warning: #fb8c00;
+            --danger: #e53935;
+            --purple: #8e24aa;
+            --bg-main: #f5f7fa;
+            --bg-card: #ffffff;
+            --text-primary: #263238;
+            --text-secondary: #546e7a;
+            --border: #cfd8dc;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #1e88e5 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 20px var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: rgba(255,255,255,0.2);
+            height: 6px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #ffd54f, #ffb74d);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        /* Navigation */
+        .nav {
+            background: white;
+            padding: 1rem 2rem;
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            box-shadow: 0 2px 10px var(--shadow);
+            position: sticky;
+            top: 140px;
+            z-index: 999;
+        }
+
+        .nav-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--border);
+            background: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            white-space: nowrap;
+            font-size: 0.9rem;
+        }
+
+        .nav-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(30, 136, 229, 0.3);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-color: var(--secondary);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        /* Sections */
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            border-left: 5px solid var(--primary);
+        }
+
+        .card-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .card-icon {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        /* Concept Boxes */
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .concept-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 5px solid var(--primary);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .concept-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(30, 136, 229, 0.2);
+        }
+
+        .concept-box h3 {
+            color: var(--primary);
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .concept-box p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* Triangle Diagram */
+        .triangle-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 3rem 0;
+            position: relative;
+        }
+
+        .triangle {
+            position: relative;
+            width: 0;
+            height: 0;
+            border-left: 200px solid transparent;
+            border-right: 200px solid transparent;
+            border-bottom: 350px solid var(--primary);
+            opacity: 0.1;
+        }
+
+        .triangle-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 500px;
+        }
+
+        .triangle-point {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px var(--shadow);
+            margin: 1rem;
+            border: 3px solid var(--primary);
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .triangle-center {
+            background: var(--primary);
+            color: white;
+            padding: 2rem;
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 2rem auto;
+            font-weight: 700;
+            font-size: 1.2rem;
+            box-shadow: 0 10px 40px rgba(30, 136, 229, 0.4);
+        }
+
+        /* Process Flow */
+        .process-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+            border-radius: 20px;
+        }
+
+        .process-step {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(142, 36, 170, 0.2);
+            border-top: 4px solid var(--purple);
+        }
+
+        .process-step-number {
+            background: var(--purple);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .process-step h4 {
+            color: var(--purple);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .process-arrow {
+            font-size: 2rem;
+            color: var(--purple);
+        }
+
+        /* Flashcard */
+        .flashcard-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .flashcard {
+            perspective: 1000px;
+            height: 250px;
+            cursor: pointer;
+        }
+
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .flashcard.flipped .flashcard-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 8px 25px var(--shadow);
+        }
+
+        .flashcard-front {
+            background: linear-gradient(135deg, var(--warning), #ff9800);
+            color: white;
+        }
+
+        .flashcard-back {
+            background: linear-gradient(135deg, var(--success), #66bb6a);
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-term {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .flashcard-definition {
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        /* EVM Table */
+        .evm-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 2rem 0;
+            box-shadow: 0 8px 25px var(--shadow);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .evm-table thead {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
+        }
+
+        .evm-table th, .evm-table td {
+            padding: 1.25rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .evm-table th {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .evm-table tbody tr {
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .evm-table tbody tr:hover {
+            background: #e3f2fd;
+            transform: scale(1.02);
+        }
+
+        .acronym {
+            font-family: 'Roboto Mono', monospace;
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 700;
+        }
+
+        /* Summary Box */
+        .summary-box {
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+            border-left: 6px solid var(--success);
+        }
+
+        .summary-box h3 {
+            color: #2e7d32;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .summary-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .summary-box li {
+            padding: 0.75rem 0;
+            padding-left: 2.5rem;
+            position: relative;
+            font-size: 1.05rem;
+        }
+
+        .summary-box li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        /* Highlight Box */
+        .highlight {
+            background: linear-gradient(135deg, #fff9c4, #fff59d);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border-left: 5px solid #fbc02d;
+            margin: 1.5rem 0;
+            font-weight: 500;
+        }
+
+        .highlight strong {
+            color: #f57f17;
+            font-size: 1.1rem;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #e1f5fe, #b3e5fc);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border-left: 5px solid var(--accent);
+            margin: 1.5rem 0;
+        }
+
+        .info-box h4 {
+            color: #006064;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+        }
+
+        /* Quiz Section */
+        .quiz-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border-top: 5px solid var(--accent);
+        }
+
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-header h2 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .quiz-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 2rem 0;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+            font-weight: 600;
+        }
+
+        .question-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-left: 5px solid var(--primary);
+        }
+
+        .question-number {
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            display: inline-block;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .question-text {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .option {
+            background: white;
+            padding: 1.25rem 1.5rem;
+            border-radius: 12px;
+            border: 3px solid var(--border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .option:hover {
+            border-color: var(--accent);
+            transform: translateX(8px);
+            box-shadow: 0 5px 15px rgba(0, 172, 193, 0.2);
+        }
+
+        .option-letter {
+            background: var(--border);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--text-primary);
+            flex-shrink: 0;
+        }
+
+        .option.selected {
+            background: #e3f2fd;
+            border-color: var(--primary);
+        }
+
+        .option.selected .option-letter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .option.correct {
+            background: #e8f5e9;
+            border-color: var(--success);
+        }
+
+        .option.correct .option-letter {
+            background: var(--success);
+            color: white;
+        }
+
+        .option.incorrect {
+            background: #ffebee;
+            border-color: var(--danger);
+        }
+
+        .option.incorrect .option-letter {
+            background: var(--danger);
+            color: white;
+        }
+
+        .explanation {
+            background: #fff3e0;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 1.5rem;
+            border-left: 5px solid var(--warning);
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+            animation: slideDown 0.4s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .explanation-title {
+            font-weight: 700;
+            color: #e65100;
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 3rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(30, 136, 229, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success), #66bb6a);
+            color: white;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(67, 160, 71, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+        }
+
+        .modal-overlay.show {
+            display: block;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 3rem;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            z-index: 2001;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .modal.show {
+            display: block;
+            animation: modalPop 0.5s ease;
+        }
+
+        @keyframes modalPop {
+            0% { transform: translate(-50%, -50%) scale(0.7); opacity: 0; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+
+        .final-score {
+            font-size: 5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 1.5rem 0;
+        }
+
+        .performance-badge {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        .badge-excellent { background: #e8f5e9; color: #2e7d32; }
+        .badge-good { background: #e3f2fd; color: #1976d2; }
+        .badge-fair { background: #fff3e0; color: #f57c00; }
+        .badge-poor { background: #ffebee; color: #c62828; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.6rem; }
+            .nav { padding: 1rem; gap: 0.5rem; }
+            .nav-btn { padding: 0.5rem 1rem; font-size: 0.85rem; }
+            .concept-grid { grid-template-columns: 1fr; }
+            .process-flow { flex-direction: column; }
+            .flashcard-container { grid-template-columns: 1fr; }
+            .final-score { font-size: 3.5rem; }
+            .triangle-content { width: 90%; }
+        }
+
+        /* Print Styles */
+        @media print {
+            .header, .nav, .btn-group { position: static; }
+            .section { display: block !important; page-break-after: always; }
+            .flashcard { height: auto; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📊 Metodología de Diseño y Gestión de Proyectos</h1>
+        <p>Guía de Estudio Visual e Interactiva - Maestría</p>
+        <div class="progress-container">
+            <div class="progress-bar" id="progress"></div>
+        </div>
+    </div>
+
+    <div class="nav">
+        <button class="nav-btn active" onclick="showSection('inicio')">🏠 Inicio</button>
+        <button class="nav-btn" onclick="showSection('restricciones')">📐 Restricciones</button>
+        <button class="nav-btn" onclick="showSection('evm')">💰 EVM</button>
+        <button class="nav-btn" onclick="showSection('edt')">🗂️ EDT</button>
+        <button class="nav-btn" onclick="showSection('scrum')">⚡ SCRUM</button>
+        <button class="nav-btn" onclick="showSection('fases')">🔄 Fases</button>
+        <button class="nav-btn" onclick="showSection('estandares')">📋 Estándares</button>
+        <button class="nav-btn" onclick="showSection('gestion')">👨‍💼 Gestión</button>
+        <button class="nav-btn" onclick="showSection('riesgos')">⚠️ Riesgos</button>
+        <button class="nav-btn" onclick="showSection('flashcards')">🃏 Flashcards</button>
+        <button class="nav-btn" onclick="showSection('cuestionario')">🎯 Cuestionario</button>
+    </div>
+
+    <div class="container">
+        <!-- SECCIÓN INICIO -->
+        <div id="inicio" class="section active">
+            <div class="card">
+                <h2 class="card-title">
+                    <div class="card-icon">🎓</div>
+                    Bienvenido a la Guía de Estudio
+                </h2>
+                
+                <div class="summary-box">
+                    <h3>🎯 Objetivo de esta Guía</h3>
+                    <p style="font-size:1.1rem; margin-bottom:1rem;">Esta guía interactiva cubre todos los conceptos clave de Metodología de Diseño y Gestión de Proyectos. Incluye visualizaciones, flashcards interactivas y un cuestionario completo para evaluar tu conocimiento.</p>
+                </div>
+
+                <h3 style="color:var(--primary); margin-top:2rem; margin-bottom:1.5rem; font-size:1.8rem;">📚 Contenido del Curso</h3>
+                
+                <div class="concept-grid">
+                    <div class="concept-box" onclick="showSection('restricciones')">
+                        <h3>📐 1. Triángulo de Restricciones</h3>
+                        <p>Alcance, Tiempo, Costo y Calidad - Las restricciones fundamentales de todo proyecto</p>
+                    </div>
+                    
+                    <div class="concept-box" onclick="showSection('evm')">
+                        <h3>💰 2. Earned Value Management</h3>
+                        <p>PV, EV, AC, CPI, SPI - Métricas de control de proyectos</p>
+                    </div>
+                    
+                    <div class="concept-box" onclick="showSection('edt')">
+                        <h3>🗂️ 3. EDT / WBS</h3>
+                        <p>Estructura de Desglose del Trabajo y Kick-Off</p>
+                    </div>
+                    
+                    <div class="concept-box" onclick="showSection('scrum')">
+                        <h3>⚡ 4. SCRUM</h3>
+                        <p>Metodología Ágil para gestión de proyectos</p>
+                    </div>
+                    
+                    <div class="concept-box" onclick="showSection('fases')">
+                        <h3>🔄 5. Fases del Proyecto</h3>
+                        <p>Ciclo de vida y división del proyecto</p>
+                    </div>
+                    
+                    <div class="concept-box" onclick="showSection('estandares')">
+                        <h3>📋 6. Estándares y Metodologías</h3>
+                        <p>ISO 9000:2015, PMBOK, ANSI</p>
+                    </div>
+                    
+                    <div class="concept-box" onclick="showSection('gestion')">
+                        <h3>👨‍💼 7. Gestión de Proyectos</h3>
+                        <p>Definición, fases y Project Charter</p>
+                    </div>
+                    
+                    <div class="concept-box" onclick="showSection('riesgos')">
+                        <h3>⚠️ 8. Gestión de Riesgos</h3>
+                        <p>Identificación, análisis y mitigación</p>
+                    </div>
+                </div>
+
+                <div class="highlight">
+                    <strong>💡 Recomendación:</strong> Navega por cada sección, interactúa con las flashcards y completa el cuestionario al final para evaluar tu conocimiento. ¡Buena suerte!
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN RESTRICCIONES -->
+        <div id="restricciones" class="section">
+            <div class="card">
+                <h2 class="card-title">
+                    <div class="card-icon">📐</div>
+                    Triángulo de Restricciones del Proyecto
+                </h2>
+
+                <div class="info-box">
+                    <h4>📌 Concepto Fundamental</h4>
+                    <p>El triángulo de restricciones (también llamado "triple restricción") representa las tres dimensiones interdependientes de todo proyecto: <strong>Alcance, Tiempo y Costo</strong>. En el centro está la <strong>Calidad</strong>.</p>
+                </div>
+
+                <div style="background: linear-gradient(135deg, #e3f2fd, #bbdefb); padding: 3rem; border-radius: 20px; margin: 2rem 0;">
+                    <h3 style="text-align:center; color:var(--primary); margin-bottom:2rem; font-size:1.8rem;">🔺 El Triángulo de Restricciones</h3>
+                    
+                    <div style="display:flex; justify-content:space-around; align-items:center; flex-wrap:wrap; gap:2rem;">
+                        <div class="triangle-point" style="background:linear-gradient(135deg, #1e88e5, #1565c0);">
+                            <strong style="display:block; font-size:1.3rem; margin-bottom:0.5rem;">⏱️ TIEMPO</strong>
+                            <span style="font-size:0.9rem; color:white;">Duración y Cronograma</span>
+                        </div>
+                        
+                        <div style="flex-basis:100%; height:2px; background:var(--primary); opacity:0.3;"></div>
+                        
+                        <div style="display:flex; justify-content:space-between; width:100%; max-width:600px;">
+                            <div class="triangle-point" style="background:linear-gradient(135deg, #43a047, #2e7d32);">
+                                <strong style="display:block; font-size:1.3rem; margin-bottom:0.5rem;">📊 ALCANCE</strong>
+                                <span style="font-size:0.9rem; color:white;">Requerimientos y Entregables</span>
+                            </div>
+                            
+                            <div class="triangle-point" style="background:linear-gradient(135deg, #fb8c00, #ef6c00);">
+                                <strong style="display:block; font-size:1.3rem; margin-bottom:0.5rem;">💰 COSTO</strong>
+                                <span style="font-size:0.9rem; color:white;">Presupuesto y Recursos</span>
+                            </div>
+                        </div>
+                        
+                        <div class="triangle-center">
+                            ✨ CALIDAD ✨
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color:var(--primary); margin-top:2rem; margin-bottom:1rem;">⚖️ Interdependencia</h3>
+                
+                <div class="concept-grid">
+                    <div class="concept-box" style="background:linear-gradient(135deg, #ffebee, #ffcdd2); border-color:var(--danger);">
+                        <h3 style="color:var(--danger);">⬆️ Si aumenta el Alcance</h3>
+                        <p>→ Aumenta el Tiempo necesario<br/>
+                        → Aumenta el Costo del proyecto<br/>
+                        → Puede afectar la Calidad</p>
+                    </div>
+                    
+                    <div class="concept-box" style="background:linear-gradient(135deg, #fff3e0, #ffe0b2); border-color:var(--warning);">
+                        <h3 style="color:var(--warning);">⏩ Si reduces el Tiempo</h3>
+                        <p>→ Debes reducir Alcance o aumentar Costo<br/>
+                        → Más recursos = más dinero<br/>
+                        → Riesgo de comprometer Calidad</p>
+                    </div>
+                    
+                    <div class="concept-box" style="background:linear-gradient(135deg, #e8f5e9, #c8e6c9); border-color:var(--success);">
+                        <h3 style="color:var(--success);">💵 Si reduces el Costo</h3>
+                        <p>→ Debes reducir Alcance o extender Tiempo<br/>
+                        → Menos recursos disponibles<br/>
+                        → Calidad puede verse afectada</p>
+                    </div>
+                </div>
+
+                <div class="summary-box">
+                    <h3>✅ Puntos Clave</h3>
+                    <ul>
+                        <li>Las tres restricciones están interrelacionadas: cambiar una afecta las otras</li>
+                        <li>La Calidad está en el centro y depende del equilibrio de las tres</li>
+                        <li>El Project Manager debe gestionar este equilibrio constantemente</li>
+                        <li>No se puede optimizar todo simultáneamente - hay trade-offs</li>
+                        <li>La gestión exitosa requiere negociación con stakeholders</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN EVM -->
+        <div id="evm" class="section">
+            <div class="card">
+                <h2 class="card-title">
+                    <div class="card-icon">💰</div>
+                    Earned Value Management (EVM)
+                </h2>
+
+                <div class="info-box">
+                    <h4>📌 ¿Qué es EVM?</h4>
+                    <p>Earned Value Management es una metodología de control de proyectos que integra alcance, cronograma y costos para medir el desempeño y progreso del proyecto de manera objetiva.</p>
+                </div>
+
+                <h3 style="color:var(--primary); margin-top:2rem; margin-bottom:1.5rem;">📊 Conceptos Fundamentales de EVM</h3>
+
+                <table class="evm-table">
+                    <thead>
+                        <tr>
+                            <th>Acrónimo</th>
+                            <th>Nombre Completo</th>
+                            <th>Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="acronym">PV</span></td>
+                            <td><strong>Planned Value</strong></td>
+                            <td>Valor Planificado - Presupuesto autorizado asignado al trabajo programado</td>
+                        </tr>
+                        <tr>
+                            <td><span class="acronym">EV</span></td>
+                            <td><strong>Earned Value</strong></td>
+                            <td>Valor Ganado - Valor del trabajo realmente completado</td>
+                        </tr>
+                        <tr>
+                            <td><span class="acronym">AC</span></td>
+                            <td><strong>Actual Cost</strong></td>
+                            <td>Costo Real - Costo incurrido por el trabajo completado</td>
+                        </tr>
+                        <tr>
+                            <td><span class="acronym">BAC</span></td>
+                            <td><strong>Budget at Completion</strong></td>
+                            <td>Presupuesto al Completar - Presupuesto total del proyecto</td>
+                        </tr>
+                        <tr>
+                            <td><span class="acronym">CV</span></td>
+                            <td><strong>Cost Variance</strong></td>
+                            <td>Variación de Costo - CV = EV - AC</td>
+                        </tr>
+                        <tr>
+                            <td><span class="acronym">CPI</span></td>
+                            <td><strong>Cost Performance Index</strong></td>
+                            <td>Índice de Desempeño de Costo - CPI = EV / AC</td>
+                        </tr>
+                        <tr>
+                            <td><span class="acronym">SV</span></td>
+                            <td><strong>Schedule Variance</strong></td>
+                            <td>Variación de Cronograma - SV = EV - PV</td>
+                        </tr>
+                        <tr>
+                            <td><span class="acronym">SPI</span></td>
+                            <td><strong>Schedule Performance Index</strong></td>
+                            <td>Índice de Desempeño del Cronograma - SPI = EV / PV</td>
+                        </tr>
+                        <tr>
+                            <td><span class="acronym">EAC</span></td>
+                            <td><strong>Estimate at Completion</strong></td>
+                            <td>Estimado al Completar - Pronóstico del costo total final</td>
+                        </tr>
+                        <tr>
+                            <td><span class="acronym">ETC</span></td>
+                            <td><strong>Estimate to Complete</strong></td>
+                            <td>Estimado para Completar - Costo esperado para terminar</td>
+                        </tr>
+                        <tr>
+                            <td><span class="acronym">VAC</span></td>
+                            <td><strong>Variance at Completion</strong></td>
+                            <td>Variación al Completar - VAC = BAC - EAC</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 style="color:var(--primary); margin-top:2.5rem; margin-bottom:1.5rem;">📐 Fórmulas Clave de EVM</h3>
+
+                <div class="concept-grid">
+                    <div class="concept-box" style="background:linear-gradient(135deg, #e8f5e9, #c8e6c9); border-color:var(--success);">
+                        <h3>💚 Variación de Costo (CV)</h3>
+                        <p style="font-size:1.2rem; font-family:'Roboto Mono', monospace; margin:1rem 0;"><strong>CV = EV - AC</strong></p>
+                        <p>CV > 0 → Bajo presupuesto ✅<br/>
+                        CV < 0 → Sobre presupuesto ❌</p>
+                    </div>
+
+                    <div class="concept-box" style="background:linear-gradient(135deg, #fff3e0, #ffe0b2); border-color:var(--warning);">
+                        <h3>🧡 Variación de Cronograma (SV)</h3>
+                        <p style="font-size:1.2rem; font-family:'Roboto Mono', monospace; margin:1rem 0;"><strong>SV = EV - PV</strong></p>
+                        <p>SV > 0 → Adelantado ✅<br/>
+                        SV < 0 → Atrasado ❌</p>
+                    </div>
+
+                    <div class="concept-box" style="background:linear-gradient(135deg, #e3f2fd, #bbdefb); border-color:var(--primary);">
+                        <h3>💙 Índice de Desempeño de Costo (CPI)</h3>
+                        <p style="font-size:1.2rem; font-family:'Roboto Mono', monospace; margin:1rem 0;"><strong>CPI = EV / AC</strong></p>
+                        <p>CPI > 1 → Eficiente en costos ✅<br/>
+                        CPI < 1 → Ineficiente ❌</p>
+                    </div>
+
+                    <div class="concept-box" style="background:linear-gradient(135deg, #f3e5f5, #e1bee7); border-color:var(--purple);">
+                        <h3>💜 Índice de Desempeño de Cronograma (SPI)</h3>
+                        <p style="font-size:1.2rem; font-family:'Roboto Mono', monospace; margin:1rem 0;"><strong>SPI = EV / PV</strong></p>
+                        <p>SPI > 1 → Adelantado ✅<br/>
+                        SPI < 1 → Atrasado ❌</p>
+                    </div>
+
+                    <div class="concept-box">
+                        <h3>🔮 Estimado al Completar (EAC)</h3>
+                        <p style="font-size:1.1rem; font-family:'Roboto Mono', monospace; margin:1rem 0;"><strong>EAC = BAC / CPI</strong></p>
+                        <p>Pronóstico del costo total final del proyecto basado en desempeño actual</p>
+                    </div>
+
+                    <div class="concept-box">
+                        <h3>⏭️ Estimado para Completar (ETC)</h3>
+                        <p style="font-size:1.1rem; font-family:'Roboto Mono', monospace; margin:1rem 0;"><strong>ETC = EAC - AC</strong></p>
+                        <p>Cuánto dinero más se necesita para terminar el proyecto</p>
+                    </div>
+                </div>
+
+                <div class="summary-box">
+                    <h3>✅ Interpretación Rápida de Indicadores</h3>
+                    <ul>
+                        <li><strong>CPI y SPI > 1:</strong> Proyecto va bien en costo y tiempo ✨</li>
+                        <li><strong>CPI < 1:</strong> Gastando más de lo planeado - revisar presupuesto</li>
+                        <li><strong>SPI < 1:</strong> Proyecto atrasado - tomar acciones correctivas</li>
+                        <li><strong>CV y SV positivos:</strong> Proyecto saludable</li>
+                        <li><strong>CV y SV negativos:</strong> Proyecto en problemas - intervención urgente</li>
+                    </ul>
+                </div>
+
+                <div class="highlight">
+                    <strong>💡 Ejemplo Práctico:</strong> Si BAC = $100,000, EV = $40,000, AC = $50,000, PV = $45,000:<br/>
+                    • CV = $40,000 - $50,000 = -$10,000 (sobre presupuesto)<br/>
+                    • SV = $40,000 - $45,000 = -$5,000 (atrasado)<br/>
+                    • CPI = $40,000 / $50,000 = 0.8 (ineficiente)<br/>
+                    • SPI = $40,000 / $45,000 = 0.89 (atrasado)<br/>
+                    • EAC = $100,000 / 0.8 = $125,000 (proyección final)
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN EDT -->
+        <div id="edt" class="section">
+            <div class="card">
+                <h2 class="card-title">
+                    <div class="card-icon">🗂️</div>
+                    EDT - Estructura de Desglose del Trabajo (WBS)
+                </h2>
+
+                <div class="info-box">
+                    <h4>📌 ¿Qué es una EDT/WBS?</h4>
+                    <p><strong>EDT (Estructura de Desglose del Trabajo)</strong> o <strong>WBS (Work Breakdown Structure)</strong> es una presentación simple y organizada del trabajo requerido para completar el proyecto, <strong>orientada a los entregables o "productos del trabajo"</strong> que son el resultado del esfuerzo y no el esfuerzo en sí.</p>
+                </div>
+
+                <div class="highlight">
+                    <strong>🎯 Concepto Clave:</strong> La EDT descompone el proyecto en componentes más pequeños y manejables. Se enfoca en QUÉ se va a entregar, no en CÓMO hacerlo.
+                </div>
+
+                <h3 style="color:var(--primary); margin-top:2rem; margin-bottom:1.5rem;">🏗️ Características de una EDT</h3>
+
+                <div class="concept-grid">
+                    <div class="concept-box">
+                        <h3>📦 Orientada a Entregables</h3>
+                        <p>Se enfoca en los productos, resultados y servicios que se van a crear, no en las actividades para crearlos.</p>
+                    </div>
+
+                    <div class="concept-box">
+                        <h3>🔽 Jerárquica</h3>
+                        <p>Organización en niveles: del más general (proyecto completo) al más específico (paquetes de trabajo).</p>
+                    </div>
+
+                    <div class="concept-box">
+                        <h3>📊 100% del Proyecto</h3>
+                        <p>Incluye TODO el trabajo del proyecto. Si no está en la EDT, no es parte del alcance.</p>
+                    </div>
+
+                    <div class="concept-box">
+                        <h3>🎁 Paquetes de Trabajo</h3>
+                        <p>El nivel más bajo son los paquetes de trabajo, unidades de trabajo asignables y medibles.</p>
+                    </div>
+                </div>
+
+                <h3 style="color:var(--primary); margin-top:2rem; margin-bottom:1.5rem;">📐 Ejemplo Visual de EDT</h3>
+
+                <div style="background: linear-gradient(135deg, #f3e5f5, #e1bee7); padding: 2rem; border-radius: 20px;">
+                    <div style="text-align:center;">
+                        <div style="background:var(--purple); color:white; padding:1.5rem; border-radius:15px; margin-bottom:2rem; font-weight:700; font-size:1.2rem;">
+                            🏗️ PROYECTO: Desarrollo de Aplicación Móvil
+                        </div>
+                        
+                        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:1.5rem; margin-top:1.5rem;">
+                            <div style="background:white; padding:1.5rem; border-radius:12px; border-top:4px solid #7b1fa2;">
+                                <strong style="color:#7b1fa2; display:block; margin-bottom:1rem;">1.0 Requisitos</strong>
+                                <div style="font-size:0.9rem; text-align:left;">
+                                    • 1.1 Levantamiento<br/>
+                                    • 1.2 Documentación<br/>
+                                    • 1.3 Aprobación
+                                </div>
+                            </div>
+
+                            <div style="background:white; padding:1.5rem; border-radius:12px; border-top:4px solid #7b1fa2;">
+                                <strong style="color:#7b1fa2; display:block; margin-bottom:1rem;">2.0 Diseño</strong>
+                                <div style="font-size:0.9rem; text-align:left;">
+                                    • 2.1 UI/UX<br/>
+                                    • 2.2 Arquitectura<br/>
+                                    • 2.3 Base de Datos
+                                </div>
+                            </div>
+
+                            <div style="background:white; padding:1.5rem; border-radius:12px; border-top:4px solid #7b1fa2;">
+                                <strong style="color:#7b1fa2; display:block; margin-bottom:1rem;">3.0 Desarrollo</strong>
+                                <div style="font-size:0.9rem; text-align:left;">
+                                    • 3.1 Frontend<br/>
+                                    • 3.2 Backend<br/>
+                                    • 3.3 Integración
+                                </div>
+                            </div>
+
+                            <div style="background:white; padding:1.5rem; border-radius:12px; border-top:4px solid #7b1fa2;">
+                                <strong style="color:#7b1fa2; display:block; margin-bottom:1rem;">4.0 Pruebas</strong>
+                                <div style="font-size:0.9rem; text-align:left;">
+                                    • 4.1 Unitarias<br/>
+                                    • 4.2 Integración<br/>
+                                    • 4.3 UAT
+                                </div>
+                            </div>
+
+                            <div style="background:white; padding:1.5rem; border-radius:12px; border-top:4px solid #7b1fa2;">
+                                <strong style="color:#7b1fa2; display:block; margin-bottom:1rem;">5.0 Despliegue</strong>
+                                <div style="font-size:0.9rem; text-align:left;">
+                                    • 5.1 Producción<br/>
+                                    • 5.2 Documentación<br/>
+                                    • 5.3 Capacitación
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color:var(--primary); margin-top:2.5rem; margin-bottom:1.5rem;">🚀 Kick-Off Meeting</h3>
+
+                <div class="info-box">
+                    <h4>🎪 ¿Qué es el Kick-Off?</h4>
+                    <p>El <strong>Kick-Off Meeting</strong> es la reunión de inicio formal del proyecto donde se presenta y aprueba el <strong>Plan de Gestión del Proyecto</strong>. Marca el comienzo oficial de la ejecución.</p>
+                </div>
+
+                <div class="concept-grid">
+                    <div class="concept-box" style="background:linear-gradient(135deg, #e8f5e9, #c8e6c9); border-color:var(--success);">
+                        <h3>👥 Participantes</h3>
+                        <p>• Sponsor del proyecto<br/>
+                        • Project Manager<br/>
+                        • Equipo del proyecto<br/>
+                        • Stakeholders clave<br/>
+                        • Cliente (si aplica)</p>
+                    </div>
+
+                    <div class="concept-box" style="background:linear-gradient(135deg, #fff3e0, #ffe0b2); border-color:var(--warning);">
+                        <h3>📋 Agenda Típica</h3>
+                        <p>• Presentación del equipo<br/>
+                        • Revisión de objetivos<br/>
+                        • Aprobación del plan<br/>
+                        • Cronograma y presupuesto<br/>
+                        • Roles y responsabilidades<br/>
+                        • Plan de comunicación</p>
+                    </div>
+
+                    <div class="concept-box" style="background:linear-gradient(135deg, #e3f2fd, #bbdefb); border-color:var(--primary);">
+                        <h3>🎯 Objetivos</h3>
+                        <p>• Alinear expectativas<br/>
+                        • Establecer compromiso<br/>
+                        • Aclarar alcance<br/>
+                        • Definir comunicación<br/>
+                        • Obtener buy-in del equipo</p>
+                    </div>
+                </div>
+
+                <div class="summary-box">
+                    <h3>✅ Puntos Clave EDT y Kick-Off</h3>
+                    <ul>
+                        <li>EDT se enfoca en ENTREGABLES (qué), no en actividades (cómo)</li>
+                        <li>La EDT incluye el 100% del trabajo del proyecto</li>
+                        <li>Descomposición jerárquica: niveles de detalle creciente</li>
+                        <li>Paquetes de trabajo son el nivel más bajo y asignable</li>
+                        <li>Kick-Off marca el inicio formal de la ejecución</li>
+                        <li>En el Kick-Off se aprueba el Plan de Gestión del Proyecto</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN SCRUM -->
+        <div id="scrum" class="section">
+            <div class="card">
+                <h2 class="card-title">
+                    <div class="card-icon">⚡</div>
+                    SCRUM - Metodología Ágil
+                </h2>
+
+                <div class="info-box">
+                    <h4>📌 ¿Qué es SCRUM?</h4>
+                    <p><strong>Scrum</strong> define un proceso <strong>empírico, interactivo e incremental</strong> de desarrollo que intenta obtener <strong>ventajas</strong> mediante la construcción de un marco de trabajo, en el cual las personas pueden acometer problemas complejos adaptativos maximizando el valor de los productos obtenidos de manera creativa a la vez que se mejora el rendimiento del equipo. Se trata de un proceso en el que se aplican un conjunto de buenas prácticas para trabajar de manera colaborativa en equipo.</p>
+                </div>
+
+                <div class="highlight">
+                    <strong>🎯 Filosofía Ágil:</strong> SCRUM se basa en entregas incrementales, adaptación continua, colaboración estrecha y mejora constante.
+                </div>
+
+                <h3 style="color:var(--primary); margin-top:2rem; margin-bottom:1.5rem;">🏛️ Pilares de SCRUM</h3>
+
+                <div class="concept-grid">
+                    <div class="concept-box" style="background:linear-gradient(135deg, #e3f2fd, #bbdefb); border-color:var(--primary);">
+                        <h3>👁️ Transparencia</h3>
+                        <p>Visibilidad de todos los aspectos del proceso que afectan el resultado. Todos conocen el estado actual.</p>
+                    </div>
+
+                    <div class="concept-box" style="background:linear-gradient(135deg, #f3e5f5, #e1bee7); border-color:var(--purple);">
+                        <h3>🔍 Inspección</h3>
+                        <p>Revisión frecuente del progreso hacia el objetivo para detectar variaciones no deseadas.</p>
+                    </div>
+
+                    <div class="concept-box" style="background:linear-gradient(135deg, #e8f5e9, #c8e6c9); border-color:var(--success);">
+                        <h3>🔄 Adaptación</h3>
+                        <p>Ajuste del proceso o producto cuando la inspección determina que hay desviaciones inaceptables.</p>
+                    </div>
+                </div>
+
+                <h3 style="color:var(--primary); margin-top:2.5rem; margin-bottom:1.5rem;">👥 Roles en SCRUM</h3>
+
+                <div class="concept-grid">
+                    <div class="concept-box" style="background:linear-gradient(135deg, #fff3e0, #ffe0b2); border-color:var(--warning);">
+                        <h3>🎯 Product Owner (PO)</h3>
+                        <p><strong>Responsable del producto:</strong><br/>
+                        • Define y prioriza el Product Backlog<br/>
+                        • Representa la voz del cliente<br/>
+                        • Maximiza el valor del producto<br/>
+                        • Acepta o rechaza entregables</p>
+                    </div>
+
+                    <div class="concept-box" style="background:linear-gradient(135deg, #e3f2fd, #bbdefb); border-color:var(--primary);">
+                        <h3>🎓 Scrum Master (SM)</h3>
+                        <p><strong>Facilitador del proceso:</strong><br/>
+                        • Asegura que el equipo siga SCRUM<br/>
+                        • Elimina impedimentos<br/>
+                        • Protege al equipo de distracciones<br/>
+                        • Coach y mentor del equipo</p>
+                    </div>
+
+                    <div class="concept-box" style="background:linear-gradient(135deg, #e8f5e9, #c8e6c9); border-color:var(--success);">
+                        <h3>👨‍💻 Development Team</h3>
+                        <p><strong>Equipo de desarrollo:</strong><br/>
+                        • Auto-organizado y multifuncional<br/>
+                        • 3-9 personas idealmente<br/>
+                        • Responsables de entregar el incremento<br/>
+                        • Sin jerarquías internas</p>
+                    </div>
+                </div>
+
+                <h3 style="color:var(--primary); margin-top:2.5rem; margin-bottom:1.5rem;">📦 Artefactos de SCRUM</h3>
+
+                <div class="concept-grid">
+                    <div class="concept-box">
+                        <h3>📋 Product Backlog</h3>
+                        <p>Lista ordenada y priorizada de todo lo que se necesita en el producto. Es dinámica y evoluciona constantemente.</p>
+                    </div>
+
+                    <div class="concept-box">
+                        <h3>📝 Sprint Backlog</h3>
+                        <p>Subconjunto del Product Backlog seleccionado para el Sprint actual más el plan para entregar el incremento.</p>
+                    </div>
+
+                    <div class="concept-box">
+                        <h3>✅ Incremento</h3>
+                        <p>Suma de todos los elementos del Product Backlog completados durante un Sprint. Debe ser potencialmente entregable.</p>
+                    </div>
+                </div>
+
+                <h3 style="color:var(--primary); margin-top:2.5rem; margin-bottom:1.5rem;">🔄 Ciclo de SCRUM (Sprint)</h3>
+
+                <div class="process-flow">
+                    <div class="process-step">
+                        <div class="process-step-number">1</div>
+                        <h4>Sprint Planning</h4>
+                        <p style="font-size:0.9rem; margin-top:0.5rem;">Planear qué se va a hacer en el Sprint</p>
+                    </div>
+                    <div class="process-arrow">→</div>
+                    
+                    <div class="process-step">
+                        <div class="process-step-number">2</div>
+                        <h4>Daily Scrum</h4>
+                        <p style="font-size:0.9rem; margin-top:0.5rem;">Reunión diaria de sincronización (15 min)</p>
+                    </div>
+                    <div class="process-arrow">→</div>
+                    
+                    <div class="process-step">
+                        <div class="process-step-number">3</div>
+                        <h4>Sprint Review</h4>
+                        <p style="font-size:0.9rem; margin-top:0.5rem;">Demostrar el incremento a stakeholders</p>
+                    </div>
+                    <div class="process-arrow">→</div>
+                    
+                    <div class="process-step">
+                        <div class="process-step-number">4</div>
+                        <h4>Sprint Retrospective</h4>
+                        <p style="font-size:0.9rem; margin-top:0.5rem;">Reflexionar y mejorar el proceso</p>
+                    </div>
+                </div>
+
+                <div class="info-box" style="margin-top:2rem;">
+                    <h4>⏱️ Duración del Sprint</h4>
+                    <p>Un Sprint típicamente dura de <strong>1 a 4 semanas</strong> (más común: 2 semanas). La duración se mantiene consistente durante todo el proyecto.</p>
+                </div>
+
+                <div class="summary-box">
+                    <h3>✅ Puntos Clave de SCRUM</h3>
+                    <ul>
+                        <li>Metodología ágil, empírica e incremental</li>
+                        <li>Pilares: Transparencia, Inspección, Adaptación</li>
+                        <li>Roles: Product Owner, Scrum Master, Development Team</li>
+                        <li>Artefactos: Product Backlog, Sprint Backlog, Incremento</li>
+                        <li>Eventos: Sprint Planning, Daily, Review, Retrospective</li>
+                        <li>Entregas frecuentes de valor al cliente</li>
+                        <li>Adaptación continua basada en feedback</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN FASES -->
+        <div id="fases" class="section">
+            <div class="card">
+                <h2 class="card-title">
+                    <div class="card-icon">🔄</div>
+                    Fases del Ciclo de Vida del Proyecto
+                </h2>
+
+                <div class="info-box">
+                    <h4>📌 Ciclo de Vida del Proyecto</h4>
+                    <p>El ciclo de vida del proyecto define las <strong>fases</strong> que conectan el inicio de un proyecto con su fin. Cada fase tiene características, entregables y control específicos.</p>
+                </div>
+
+                <h3 style="color:var(--primary); margin-top:2rem; margin-bottom:1.5rem;">📊 Las 5 Fases Principales</h3>
+
+                <div style="background:linear-gradient(135deg, #f3e5f5, #e1bee7); padding:2.5rem; border-radius:20px; margin:2rem 0;">
+                    <div class="process-flow" style="background:transparent; padding:0;">
+                        <div class="process-step">
+                            <div class="process-step-number">1</div>
+                            <h4>INICIACIÓN</h4>
+                            <p style="font-size:0.9rem; margin-top:0.75rem; line-height:1.6;">
+                                • Project Charter<br/>
+                                • Identificar stakeholders<br/>
+                                • Definir objetivo<br/>
+                                • Autorizar el proyecto
+                            </p>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        
+                        <div class="process-step">
+                            <div class="process-step-number">2</div>
+                            <h4>PLANIFICACIÓN</h4>
+                            <p style="font-size:0.9rem; margin-top:0.75rem; line-height:1.6;">
+                                • Plan de gestión<br/>
+                                • EDT/WBS<br/>
+                                • Cronograma<br/>
+                                • Presupuesto
+                            </p>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        
+                        <div class="process-step">
+                            <div class="process-step-number">3</div>
+                            <h4>EJECUCIÓN</h4>
+                            <p style="font-size:0.9rem; margin-top:0.75rem; line-height:1.6;">
+                                • Realizar el trabajo<br/>
+                                • Crear entregables<br/>
+                                • Gestionar equipo<br/>
+                                • Asegurar calidad
+                            </p>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        
+                        <div class="process-step">
+                            <div class="process-step-number">4</div>
+                            <h4>CONTROL</h4>
+                            <p style="font-size:0.9rem; margin-top:0.75rem; line-height:1.6;">
+                                • Monitorear avance<br/>
+                                • Control de cambios<br/>
+                                • Acciones correctivas<br/>
+                                • Reportes de estado
+                            </p>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        
+                        <div class="process-step">
+                            <div class="process-step-number">5</div>
+                            <h4>CIERRE</h4>
+                            <p style="font-size:0.9rem; margin-top:0.75rem; line-height:1.6;">
+                                • Aceptación formal<br/>
+                                • Lecciones aprendidas<br/>
+                                • Archivar documentos<br/>
+                                • Liberar recursos
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color:var(--primary); margin-top:2.5rem; margin-bottom:1.5rem;">📈 Curva de Interacción por Fase</h3>
+
+                <div class="highlight">
+                    <strong>💡 Concepto Importante:</strong> Diseño y Planificación pueden <strong>empalmar parcialmente</strong>, pero generalmente son secuenciales. La planificación detallada requiere un diseño base definido.
+                </div>
+
+                <div class="concept-grid">
+                    <div class="concept-box" style="background:linear-gradient(135deg, #e8f5e9, #c8e6c9); border-color:var(--success);">
+                        <h3>⬆️ INICIACIÓN</h3>
+                        <p><strong>Interacción:</strong> Baja<br/>
+                        <strong>Recursos:</strong> Mínimos<br/>
+                        <strong>Costo:</strong> Bajo<br/>
+                        <strong>Duración:</strong> Corta</p>
+                    </div>
+
+                    <div class="concept-box" style="background:linear-gradient(135deg, #fff3e0, #ffe0b2); border-color:var(--warning);">
+                        <h3>📈 PLANIFICACIÓN</h3>
+                        <p><strong>Interacción:</strong> Media-Alta<br/>
+                        <strong>Recursos:</strong> Moderados<br/>
+                        <strong>Costo:</strong> Medio<br/>
+                        <strong>Duración:</strong> Media</p>
+                    </div>
+
+                    <div class="concept-box" style="background:linear-gradient(135deg, #ffebee, #ffcdd2); border-color:var(--danger);">
+                        <h3>🔥 EJECUCIÓN</h3>
+                        <p><strong>Interacción:</strong> MUY ALTA<br/>
+                        <strong>Recursos:</strong> Máximos<br/>
+                        <strong>Costo:</strong> Más Alto<br/>
+                        <strong>Duración:</strong> Más Larga</p>
+                    </div>
+
+                    <div class="concept-box" style="background:linear-gradient(135deg, #e3f2fd, #bbdefb); border-color:var(--primary);">
+                        <h3>📉 CONTROL</h3>
+                        <p><strong>Interacción:</strong> Media<br/>
+                        <strong>Recursos:</strong> Moderados<br/>
+                        <strong>Costo:</strong> Medio<br/>
+                        <strong>Nota:</strong> Paralelo a ejecución</p>
+                    </div>
+
+                    <div class="concept-box" style="background:linear-gradient(135deg, #f3e5f5, #e1bee7); border-color:var(--purple);">
+                        <h3>⬇️ CIERRE</h3>
+                        <p><strong>Interacción:</strong> Baja<br/>
+                        <strong>Recursos:</strong> Mínimos<br/>
+                        <strong>Costo:</strong> Bajo<br/>
+                        <strong>Duración:</strong> Corta</p>
+                    </div>
+                </div>
+
+                <h3 style="color:var(--primary); margin-top:2.5rem; margin-bottom:1.5rem;">🎯 División del Proyecto desde Dirección</h3>
+
+                <div class="info-box">
+                    <h4>📐 Cómo se Divide un Proyecto</h4>
+                    <p>Desde la perspectiva de dirección de proyectos, un proyecto se divide en:</p>
+                </div>
+
+                <div class="concept-grid">
+                    <div class="concept-box">
+                        <h3>🗂️ Por Fases</h3>
+                        <p>Cada fase tiene entregables específicos, puntos de control (gates) y criterios de salida.</p>
+                    </div>
+
+                    <div class="concept-box">
+                        <h3>📦 Por Entregables (EDT)</h3>
+                        <p>Desglose jerárquico orientado a los productos del trabajo.</p>
+                    </div>
+
+                    <div class="concept-box">
+                        <h3>⏱️ Por Tiempo (Cronograma)</h3>
+                        <p>Actividades secuenciadas en el tiempo con hitos y dependencias.</p>
+                    </div>
+
+                    <div class="concept-box">
+                        <h3>👥 Por Responsabilidades</h3>
+                        <p>Matriz RACI, equipos funcionales, roles específicos.</p>
+                    </div>
+                </div>
+
+                <div class="summary-box">
+                    <h3>✅ Puntos Clave de las Fases</h3>
+                    <ul>
+                        <li>5 fases principales: Iniciación, Planificación, Ejecución, Control, Cierre</li>
+                        <li>Cada fase tiene entregables y puntos de control específicos</li>
+                        <li>Ejecución y Control corren en paralelo</li>
+                        <li>Diseño y Planificación pueden empalmar pero son mayormente secuenciales</li>
+                        <li>La interacción es MÁS ALTA durante la ejecución</li>
+                        <li>Desde dirección el proyecto se divide por: fases, entregables, tiempo y responsabilidades</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN ESTÁNDARES -->
+        <div id="estandares" class="section">
+            <div class="card">
+                <h2 class="card-title">
+                    <div class="card-icon">📋</div>
+                    Estándares y Metodologías
+                </h2>
+
+                <div class="concept-grid">
+                    <div class="concept-box">
+                        <h3>📐 Estándar</h3>
+                        <p>Conjunto de especificaciones técnicas y mejores prácticas profesionales para regular, guiar o definir necesidades demandadas por sociedad y tecnología. Define <strong>cómo hay que hacer</strong> algo.</p>
+                    </div>
+
+                    <div class="concept-box">
+                        <h3>🔧 Metodología</h3>
+                        <p>Conjunto de procedimientos basados en principios lógicos para alcanzar objetivos. Incluye: medidas, herramientas, roles, técnicas. Define <strong>qué hay que hacer</strong> ante un problema determinado.</p>
+                    </div>
+
+                    <div class="concept-box">
+                        <h3>📝 Procedimiento</h3>
+                        <p>Serie de pasos documentados necesarios para completar con éxito un proyecto o tarea específica.</p>
+                    </div>
+                </div>
+
+                <h3 style="color:var(--primary); margin:2rem 0 1.5rem;">🌐 ISO 9000:2015</h3>
+                <div class="info-box">
+                    <h4>Sistemas de Gestión de Calidad - Fundamentos y Vocabulario</h4>
+                    <p>ISO 9000:2015 establece los <strong>fundamentos de los sistemas de gestión de calidad</strong> y especifica la terminología aplicable. Define conceptos clave como calidad, gestión, proceso, y establecimiento de objetivos de calidad.</p>
+                </div>
+
+                <h3 style="color:var(--primary); margin:2rem 0 1.5rem;">📚 PMBOK - Estándar ANSI</h3>
+                <div class="highlight">
+                    <strong>¿Es PMBOK un estándar ANSI? SÍ ✅</strong><br/><br/>
+                    La primera edición de PMBOK data de 1996. Poco a poco fue calando en las industrias y en la administración de proyectos, convirtiéndose en un <strong>estándar ANSI en el año 2000</strong> con su segunda edición (el único con esta categoría para la Gestión de Proyectos) y reconocido internacionalmente en el IEEE Std 1490-2003.<br/><br/>
+                    Actualmente va por la <strong>7ª edición</strong>. En esta edición tuvo lugar una fuerte importante evolución del estándar y cuando se empezó a cobrar, ya que la de 1996 había sido gratuita.
+                </div>
+
+                <div class="summary-box">
+                    <h3>✅ Puntos Clave</h3>
+                    <ul>
+                        <li>Estándar = especificaciones técnicas (CÓMO hacer)</li>
+                        <li>Metodología = procedimientos para objetivos (QUÉ hacer)</li>
+                        <li>ISO 9000:2015 define fundamentos de gestión de calidad</li>
+                        <li>PMBOK es estándar ANSI desde 2000</li>
+                        <li>PMBOK actualmente en 7ª edición</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN GESTIÓN -->
+        <div id="gestion" class="section">
+            <div class="card">
+                <h2 class="card-title">
+                    <div class="card-icon">👨‍💼</div>
+                    Gestión de Proyectos
+                </h2>
+
+                <div class="info-box">
+                    <h4>📌 ¿Qué es un Proyecto?</h4>
+                    <p>Un proyecto es una <strong>secuencia bien definida de eventos con un principio y un final</strong>, dirigidos a alcanzar un objetivo claro, y realizados por personas <strong>dentro de unos parámetros establecidos de tiempo, coste, recursos y calidad</strong>.</p>
+                </div>
+
+                <div class="concept-grid">
+                    <div class="concept-box" style="background:linear-gradient(135deg, #e8f5e9, #c8e6c9); border-color:var(--success);">
+                        <h3>✅ Características de un Proyecto</h3>
+                        <p>• <strong>Temporal:</strong> Tiene inicio y fin definidos<br/>
+                        • <strong>Único:</strong> Crea un producto/servicio único<br/>
+                        • <strong>Finito:</strong> No es perpetuo<br/>
+                        • <strong>Específico:</strong> Objetivo claro y medible</p>
+                    </div>
+
+                    <div class="concept-box" style="background:linear-gradient(135deg, #e3f2fd, #bbdefb); border-color:var(--primary);">
+                        <h3>📊 Parámetros Establecidos</h3>
+                        <p>• <strong>Tiempo:</strong> Cronograma definido<br/>
+                        • <strong>Costo:</strong> Presupuesto limitado<br/>
+                        • <strong>Recursos:</strong> Personas y materiales<br/>
+                        • <strong>Calidad:</strong> Estándares a cumplir</p>
+                    </div>
+                </div>
+
+                <h3 style="color:var(--primary); margin:2.5rem 0 1.5rem;">📋 Project Charter (Acta de Constitución)</h3>
+                <div class="info-box">
+                    <h4>¿Qué es el Project Charter?</h4>
+                    <p>Documento que <strong>autoriza formalmente el proyecto</strong> y otorga al Project Manager la autoridad para asignar recursos. Es la <strong>piedra angular</strong> que establece la base del proyecto.</p>
+                </div>
+
+                <div class="concept-grid">
+                    <div class="concept-box">
+                        <h3>📄 Contenido del Project Charter</h3>
+                        <p>• Propósito y justificación<br/>
+                        • Objetivos medibles<br/>
+                        • Requisitos de alto nivel<br/>
+                        • Riesgos de alto nivel<br/>
+                        • Resumen del presupuesto<br/>
+                        • Stakeholders clave<br/>
+                        • Autorización del PM</p>
+                    </div>
+
+                    <div class="concept-box">
+                        <h3>🎯 Importancia</h3>
+                        <p>• Autoriza el proyecto formalmente<br/>
+                        • Define el PM y su autoridad<br/>
+                        • Establece el compromiso organizacional<br/>
+                        • Documenta necesidades del negocio<br/>
+                        • Sirve como referencia durante el proyecto</p>
+                    </div>
+                </div>
+
+                <h3 style="color:var(--primary); margin:2.5rem 0 1.5rem;">🔍 Estudio de Factibilidad</h3>
+                <div class="highlight">
+                    <strong>💡 Concepto:</strong> Antes de crear el Project Charter, es necesario realizar un <strong>estudio de factibilidad</strong> que evalúe si el proyecto es viable técnica, económica y operacionalmente.
+                </div>
+
+                <div class="concept-grid">
+                    <div class="concept-box">
+                        <h3>💰 Factibilidad Económica</h3>
+                        <p>¿Es financieramente viable? ROI, beneficio vs costo, presupuesto disponible</p>
+                    </div>
+                    <div class="concept-box">
+                        <h3>🔧 Factibilidad Técnica</h3>
+                        <p>¿Tenemos la tecnología y conocimiento? Recursos técnicos, capacidades del equipo</p>
+                    </div>
+                    <div class="concept-box">
+                        <h3>⚙️ Factibilidad Operacional</h3>
+                        <p>¿Funcionará en la operación? Impacto organizacional, aceptación de usuarios</p>
+                    </div>
+                </div>
+
+                <div class="summary-box">
+                    <h3>✅ Puntos Clave</h3>
+                    <ul>
+                        <li>Proyecto = secuencia definida con inicio y fin, objetivo claro</li>
+                        <li>Características: temporal, único, finito, específico</li>
+                        <li>Project Charter autoriza formalmente el proyecto</li>
+                        <li>Estudio de factibilidad previo al Project Charter</li>
+                        <li>Factibilidad: económica, técnica y operacional</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN RIESGOS -->
+        <div id="riesgos" class="section">
+            <div class="card">
+                <h2 class="card-title">
+                    <div class="card-icon">⚠️</div>
+                    Gestión de Riesgos
+                </h2>
+
+                <div class="info-box">
+                    <h4>📌 ¿Qué es un Riesgo?</h4>
+                    <p>El riesgo es el <strong>potencial que una acción o una actividad elegida implique una pérdida o un resultado no deseado</strong>. Incluso, la pérdida potencial puede ser considerada como un riesgo.</p>
+                </div>
+
+                <div class="highlight">
+                    <strong>🎯 Concepto Clave:</strong> Riesgo = Incertidumbre que puede afectar los objetivos del proyecto (positiva o negativamente)
+                </div>
+
+                <h3 style="color:var(--primary); margin:2rem 0 1.5rem;">🛡️ Gestión de Riesgos</h3>
+                <div class="info-box">
+                    <h4>¿Qué implica gestionar riesgos?</h4>
+                    <p><strong>Gestionar el riesgo NO significa evitar todos los riesgos.</strong> La gestión del riesgo no puede eliminar los riesgos, y tampoco puede prevenir todos los fracasos y malos resultados. Pero puede <strong>minimizar las posibilidades de que ocurran</strong>, así como reducir el impacto que puedan tener. Puede también ayudar a que el proyecto se recupere de una manera más ágil de los problemas ocurridos inesperadamente.</p>
+                </div>
+
+                <div class="concept-grid">
+                    <div class="concept-box" style="background:linear-gradient(135deg, #fff3e0, #ffe0b2); border-color:var(--warning);">
+                        <h3>🔍 Identificación</h3>
+                        <p>• Brainstorming con equipo<br/>
+                        • Análisis de documentación<br/>
+                        • Técnica Delphi<br/>
+                        • Checklist de riesgos<br/>
+                        • Lecciones aprendidas</p>
+                    </div>
+
+                    <div class="concept-box" style="background:linear-gradient(135deg, #e3f2fd, #bbdefb); border-color:var(--primary);">
+                        <h3>📊 Análisis</h3>
+                        <p><strong>Cualitativo:</strong><br/>
+                        • Probabilidad (Alta/Media/Baja)<br/>
+                        • Impacto (Alto/Medio/Bajo)<br/>
+                        • Matriz de riesgos<br/><br/>
+                        <strong>Cuantitativo:</strong><br/>
+                        • Análisis numérico<br/>
+                        • Simulación Monte Carlo</p>
+                    </div>
+
+                    <div class="concept-box" style="background:linear-gradient(135deg, #e8f5e9, #c8e6c9); border-color:var(--success);">
+                        <h3>🎯 Respuesta</h3>
+                        <p><strong>Amenazas:</strong><br/>
+                        • Evitar • Transferir<br/>
+                        • Mitigar • Aceptar<br/><br/>
+                        <strong>Oportunidades:</strong><br/>
+                        • Explotar • Mejorar<br/>
+                        • Compartir • Aceptar</p>
+                    </div>
+
+                    <div class="concept-box" style="background:linear-gradient(135deg, #f3e5f5, #e1bee7); border-color:var(--purple);">
+                        <h3>📈 Monitoreo</h3>
+                        <p>• Seguimiento continuo<br/>
+                        • Identificar nuevos riesgos<br/>
+                        • Revisar efectividad de respuestas<br/>
+                        • Actualizar registro de riesgos<br/>
+                        • Reportar status</p>
+                    </div>
+                </div>
+
+                <h3 style="color:var(--primary); margin:2.5rem 0 1.5rem;">🔑 Clave para Tratar Riesgos</h3>
+                <div class="highlight">
+                    <strong>La clave para tratar con un riesgo es:</strong><br/>
+                    1️⃣ <strong>Entenderlo</strong> - Identificar y analizar<br/>
+                    2️⃣ <strong>Anticiparlo</strong> - Planear antes de que ocurra<br/>
+                    3️⃣ <strong>Tener un plan de cómo tratarlo</strong> - Estrategia de respuesta definida
+                </div>
+
+                <div class="summary-box">
+                    <h3>✅ Puntos Clave</h3>
+                    <ul>
+                        <li>Riesgo = potencial de pérdida o resultado no deseado</li>
+                        <li>Gestionar riesgos NO es evitarlos todos</li>
+                        <li>Objetivo: minimizar probabilidad e impacto</li>
+                        <li>Proceso: Identificar → Analizar → Planear Respuesta → Monitorear</li>
+                        <li>Clave: entender, anticipar y tener plan de respuesta</li>
+                        <li>Respuestas a amenazas: Evitar, Transferir, Mitigar, Aceptar</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN FLASHCARDS -->
+        <div id="flashcards" class="section">
+            <div class="card">
+                <h2 class="card-title">
+                    <div class="card-icon">🃏</div>
+                    Flashcards Interactivas
+                </h2>
+                
+                <p style="text-align:center; font-size:1.2rem; color:var(--text-secondary); margin-bottom:2rem;">
+                    Haz click en cada tarjeta para ver la definición
+                </p>
+
+                <div class="flashcard-container" id="flashcard-container"></div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN CUESTIONARIO -->
+        <div id="cuestionario" class="section">
+            <div class="quiz-card">
+                <div class="quiz-header">
+                    <h2>🎯 Cuestionario Final</h2>
+                    <p style="color:var(--text-secondary); margin-top:0.5rem;">Evalúa tu conocimiento de Metodología de Diseño y Gestión de Proyectos</p>
+                </div>
+
+                <div class="quiz-stats">
+                    <div class="stat">
+                        <div class="stat-value" id="current-q">1</div>
+                        <div class="stat-label">Pregunta</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="score">0</div>
+                        <div class="stat-label">Puntaje</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="total-q">30</div>
+                        <div class="stat-label">Total</div>
+                    </div>
+                </div>
+
+                <div id="quiz-container"></div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="check-btn" onclick="checkAnswer()">Verificar Respuesta</button>
+                    <button class="btn btn-success" id="next-btn" onclick="nextQuestion()" style="display:none;">Siguiente →</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal-overlay" id="overlay" onclick="closeModal()"></div>
+    <div class="modal" id="result-modal">
+        <h2 style="font-size:2rem; color:var(--primary); margin-bottom:1rem;">🎉 ¡Cuestionario Completado!</h2>
+        <div class="final-score" id="final-score">0/30</div>
+        <div class="performance-badge" id="badge"></div>
+        <p id="feedback" style="font-size:1.1rem; color:var(--text-secondary); margin:1.5rem 0;"></p>
+        <button class="btn btn-primary" onclick="restartQuiz()">🔄 Reintentar</button>
+    </div>
+
+    <script>
+        // Variables globales
+        let currentSection = 'inicio';
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+        let selectedOption = null;
+        
+        // Datos de Flashcards
+        const flashcards = [
+            { term: "PV", definition: "Planned Value - Valor planificado del trabajo programado" },
+            { term: "EV", definition: "Earned Value - Valor del trabajo realmente completado" },
+            { term: "AC", definition: "Actual Cost - Costo real incurrido por el trabajo" },
+            { term: "CPI", definition: "Cost Performance Index = EV/AC. CPI>1 eficiente, CPI<1 ineficiente" },
+            { term: "SPI", definition: "Schedule Performance Index = EV/PV. SPI>1 adelantado, SPI<1 atrasado" },
+            { term: "EDT/WBS", definition: "Estructura de Desglose del Trabajo - Descomposición jerárquica orientada a entregables" },
+            { term: "Product Owner", definition: "Responsable del producto en SCRUM, define y prioriza el Product Backlog" },
+            { term: "Scrum Master", definition: "Facilitador del proceso SCRUM, elimina impedimentos y protege al equipo" },
+            { term: "Sprint", definition: "Iteración de 1-4 semanas en SCRUM con entregable potencialmente usable" },
+            { term: "Project Charter", definition: "Documento que autoriza formalmente el proyecto y define al PM" },
+            { term: "Riesgo", definition: "Potencial de una acción que implique pérdida o resultado no deseado" },
+            { term: "PMBOK", definition: "Project Management Body of Knowledge - Estándar ANSI desde 2000" },
+            { term: "Kick-Off", definition: "Reunión de inicio formal donde se aprueba el Plan de Gestión del Proyecto" },
+            { term: "BAC", definition: "Budget at Completion - Presupuesto total del proyecto" },
+            { term: "EAC", definition: "Estimate at Completion = BAC/CPI - Pronóstico del costo final" },
+            { term: "Stakeholder", definition: "Persona u organización afectada por el proyecto o que puede influir en él" },
+            { term: "Alcance", definition: "Trabajo requerido para entregar un producto/servicio con características específicas" },
+            { term: "Calidad", definition: "Grado en que el proyecto cumple requisitos y satisface necesidades" },
+            { term: "Metodología", definition: "Conjunto de procedimientos basados en principios lógicos para alcanzar objetivos" },
+            { term: "Estándar", definition: "Especificaciones técnicas y mejores prácticas que definen CÓMO hacer algo" }
+        ];
+
+        // Datos del Cuestionario
+        const questions = [
+            {
+                q: "¿Qué representa el triángulo de restricciones?",
+                opts: ["Solo tiempo y costo", "Alcance, Tiempo y Costo con Calidad al centro", "Solo calidad", "Recursos humanos"],
+                correct: 1,
+                exp: "El triángulo representa Alcance, Tiempo y Costo como lados interdependientes, con la Calidad en el centro."
+            },
+            {
+                q: "Si CPI = 0.8, ¿qué significa?",
+                opts: ["Proyecto eficiente en costos", "Proyecto gastando más de lo planeado", "Proyecto adelantado", "Proyecto atrasado"],
+                correct: 1,
+                exp: "CPI < 1 significa ineficiencia en costos, está gastando más de lo planeado por unidad de trabajo."
+            },
+            {
+                q: "¿Qué significa SPI > 1?",
+                opts: ["Proyecto atrasado", "Proyecto adelantado", "Sobre presupuesto", "Bajo presupuesto"],
+                correct: 1,
+                exp: "SPI > 1 indica que el proyecto va adelantado respecto al cronograma planificado."
+            },
+            {
+                q: "¿La EDT se enfoca en?",
+                opts: ["Actividades", "Entregables", "Personas", "Costos"],
+                correct: 1,
+                exp: "La EDT (WBS) se orienta a ENTREGABLES o productos del trabajo, no a actividades."
+            },
+            {
+                q: "¿Cuántas personas típicamente forman un Development Team en SCRUM?",
+                opts: ["1-3", "3-9", "10-15", "15-20"],
+                correct: 1,
+                exp: "El Development Team en SCRUM idealmente tiene entre 3-9 personas para ser eficiente."
+            },
+            {
+                q: "¿Qué rol en SCRUM elimina impedimentos?",
+                opts: ["Product Owner", "Scrum Master", "Development Team", "Stakeholder"],
+                correct: 1,
+                exp: "El Scrum Master actúa como facilitador, eliminando impedimentos y protegiendo al equipo."
+            },
+            {
+                q: "¿Cuánto dura típicamente un Sprint?",
+                opts: ["1 día", "1 semana", "2-4 semanas", "3 meses"],
+                correct: 2,
+                exp: "Un Sprint típicamente dura de 1 a 4 semanas, siendo 2 semanas lo más común."
+            },
+            {
+                q: "¿En qué año PMBOK se convirtió en estándar ANSI?",
+                opts: ["1996", "2000", "2010", "2015"],
+                correct: 1,
+                exp: "PMBOK se convirtió en estándar ANSI en el año 2000 con su segunda edición."
+            },
+            {
+                q: "Un proyecto es:",
+                opts: ["Perpetuo", "Temporal y único", "Solo actividades", "Indefinido"],
+                correct: 1,
+                exp: "Un proyecto es temporal (tiene inicio y fin) y único (crea algo que no existía)."
+            },
+            {
+                q: "¿Qué documento autoriza formalmente el proyecto?",
+                opts: ["EDT", "Cronograma", "Project Charter", "Presupuesto"],
+                correct: 2,
+                exp: "El Project Charter (Acta de Constitución) autoriza formalmente el proyecto y define al PM."
+            },
+            {
+                q: "¿Gestionar riesgos significa?",
+                opts: ["Evitar todos los riesgos", "Minimizar probabilidad e impacto", "Ignorar riesgos", "Solo documentar"],
+                correct: 1,
+                exp: "Gestionar riesgos significa minimizar las posibilidades de que ocurran y reducir su impacto."
+            },
+            {
+                q: "CV = EV - AC. Si CV < 0, significa:",
+                opts: ["Bajo presupuesto", "Sobre presupuesto", "Adelantado", "Atrasado"],
+                correct: 1,
+                exp: "CV negativo indica que el costo real (AC) es mayor que el valor ganado (EV) - sobre presupuesto."
+            },
+            {
+                q: "¿Cuál NO es una fase del proyecto?",
+                opts: ["Iniciación", "Planificación", "Especulación", "Cierre"],
+                correct: 2,
+                exp: "Las 5 fases son: Iniciación, Planificación, Ejecución, Control y Cierre."
+            },
+            {
+                q: "ISO 9000:2015 trata sobre:",
+                opts: ["Seguridad", "Gestión de Calidad", "Medio ambiente", "Finanzas"],
+                correct: 1,
+                exp: "ISO 9000:2015 establece fundamentos de sistemas de gestión de calidad y vocabulario."
+            },
+            {
+                q: "En el Kick-Off se:",
+                opts: ["Finaliza el proyecto", "Aprueba el Plan de Gestión", "Cierra riesgos", "Archivan documentos"],
+                correct: 1,
+                exp: "En el Kick-Off Meeting se presenta y aprueba el Plan de Gestión del Proyecto."
+            },
+            {
+                q: "¿Cuál es un pilar de SCRUM?",
+                opts: ["Documentación", "Transparencia", "Burocracia", "Jerarquía"],
+                correct: 1,
+                exp: "Los 3 pilares de SCRUM son: Transparencia, Inspección y Adaptación."
+            },
+            {
+                q: "EAC se calcula como:",
+                opts: ["EV/AC", "BAC/CPI", "EV-PV", "AC-EV"],
+                correct: 1,
+                exp: "EAC (Estimate at Completion) = BAC / CPI, proyecta el costo final basado en desempeño."
+            },
+            {
+                q: "¿Qué artefacto de SCRUM es dinámico y evoluciona?",
+                opts: ["Sprint Backlog", "Product Backlog", "Incremento", "Definition of Done"],
+                correct: 1,
+                exp: "El Product Backlog es dinámico, evoluciona y se reprioriza constantemente."
+            },
+            {
+                q: "Si SV = EV - PV es negativo:",
+                opts: ["Adelantado", "Atrasado", "Eficiente", "Sobre presupuesto"],
+                correct: 1,
+                exp: "SV negativo significa que el valor ganado es menor que el planificado - proyecto atrasado."
+            },
+            {
+                q: "¿Qué define un estándar?",
+                opts: ["Qué hacer", "Cómo hacer", "Quién hace", "Cuándo hacer"],
+                correct: 1,
+                exp: "Un estándar define CÓMO hacer algo mediante especificaciones técnicas y mejores prácticas."
+            },
+            {
+                q: "El nivel más bajo de la EDT son:",
+                opts: ["Fases", "Entregables", "Paquetes de trabajo", "Actividades"],
+                correct: 2,
+                exp: "Los paquetes de trabajo son el nivel más bajo de la EDT, unidades asignables y medibles."
+            },
+            {
+                q: "¿Qué evento de SCRUM dura 15 minutos?",
+                opts: ["Sprint Planning", "Daily Scrum", "Sprint Review", "Retrospective"],
+                correct: 1,
+                exp: "El Daily Scrum es la reunión diaria de sincronización que dura máximo 15 minutos."
+            },
+            {
+                q: "¿Cuándo tiene MAYOR interacción un proyecto?",
+                opts: ["Iniciación", "Planificación", "Ejecución", "Cierre"],
+                correct: 2,
+                exp: "La fase de Ejecución tiene la MAYOR interacción, recursos y costos del proyecto."
+            },
+            {
+                q: "Una metodología define:",
+                opts: ["Solo documentos", "Qué hacer ante un problema", "Costos", "Solo tiempos"],
+                correct: 1,
+                exp: "Una metodología define QUÉ hacer ante un problema mediante procedimientos y técnicas."
+            },
+            {
+                q: "¿Diseño y Planificación son?",
+                opts: ["Siempre paralelos", "Mayormente secuenciales", "Uno solo", "Nunca se tocan"],
+                correct: 1,
+                exp: "Diseño y Planificación pueden empalmar parcialmente pero son mayormente secuenciales."
+            },
+            {
+                q: "¿Qué NO hace el Product Owner?",
+                opts: ["Prioriza backlog", "Acepta entregables", "Facilita Daily Scrum", "Define producto"],
+                correct: 2,
+                exp: "Facilitar el Daily Scrum es responsabilidad del Scrum Master, no del Product Owner."
+            },
+            {
+                q: "BAC representa:",
+                opts: ["Costo actual", "Presupuesto total", "Valor ganado", "Variación"],
+                correct: 1,
+                exp: "BAC (Budget at Completion) es el presupuesto total aprobado para el proyecto completo."
+            },
+            {
+                q: "¿Qué estudio se hace antes del Project Charter?",
+                opts: ["Rentabilidad", "Factibilidad", "Auditoría", "Marketing"],
+                correct: 1,
+                exp: "El estudio de factibilidad (técnica, económica, operacional) precede al Project Charter."
+            },
+            {
+                q: "En SCRUM, el incremento debe ser:",
+                opts: ["Perfecto", "Potencialmente entregable", "Sin errores", "Completo al 100%"],
+                correct: 1,
+                exp: "El incremento debe ser potencialmente entregable, aunque el PO decida no liberarlo."
+            },
+            {
+                q: "La clave para tratar riesgos es:",
+                opts: ["Ignorarlos", "Entender, anticipar y planear", "Evitarlos todos", "Solo documentar"],
+                correct: 1,
+                exp: "La clave es: entenderlo, anticiparlo y tener un plan de cómo tratarlo."
+            }
+        ];
+        
+        // Funciones de navegación
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            updateProgress(sectionId);
+            window.scrollTo({top: 0, behavior: 'smooth'});
+            currentSection = sectionId;
+            
+            if(sectionId === 'flashcards') loadFlashcards();
+            if(sectionId === 'cuestionario') loadQuestion();
+        }
+        
+        function updateProgress(sectionId) {
+            const sections = ['inicio', 'restricciones', 'evm', 'edt', 'scrum', 'fases', 'estandares', 'gestion', 'riesgos', 'flashcards', 'cuestionario'];
+            const index = sections.indexOf(sectionId);
+            const progress = ((index + 1) / sections.length) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+        }
+        
+        // Flashcards
+        function loadFlashcards() {
+            const container = document.getElementById('flashcard-container');
+            if(container.children.length > 0) return;
+            
+            flashcards.forEach((card, i) => {
+                const div = document.createElement('div');
+                div.className = 'flashcard';
+                div.onclick = () => div.classList.toggle('flipped');
+                div.innerHTML = `
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <div class="flashcard-term">${card.term}</div>
+                            <p style="font-size:0.9rem; opacity:0.9;">Click para ver definición</p>
+                        </div>
+                        <div class="flashcard-back">
+                            <div class="flashcard-definition">${card.definition}</div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+        
+        // Cuestionario
+        function loadQuestion() {
+            const q = questions[currentQuestion];
+            const container = document.getElementById('quiz-container');
+            
+            let html = `
+                <div class="question-card">
+                    <div class="question-number">Pregunta ${currentQuestion + 1}/${questions.length}</div>
+                    <div class="question-text">${q.q}</div>
+                    <div class="options">
+            `;
+            
+            q.opts.forEach((opt, i) => {
+                html += `
+                    <div class="option" onclick="selectOption(${i})">
+                        <div class="option-letter">${String.fromCharCode(65 + i)}</div>
+                        <div>${opt}</div>
+                    </div>
+                `;
+            });
+            
+            html += `
+                    </div>
+                    <div class="explanation" id="explanation">
+                        <div class="explanation-title">💡 Explicación</div>
+                        <div>${q.exp}</div>
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+            document.getElementById('current-q').textContent = currentQuestion + 1;
+            answered = false;
+            selectedOption = null;
+            document.getElementById('check-btn').style.display = 'inline-block';
+            document.getElementById('next-btn').style.display = 'none';
+        }
+        
+        function selectOption(index) {
+            if(answered) return;
+            const options = document.querySelectorAll('.option');
+            options.forEach(opt => opt.classList.remove('selected'));
+            options[index].classList.add('selected');
+            selectedOption = index;
+        }
+        
+        function checkAnswer() {
+            if(answered) return;
+            if(selectedOption === null) {
+                alert('Por favor selecciona una respuesta');
+                return;
+            }
+            
+            const correct = questions[currentQuestion].correct;
+            const options = document.querySelectorAll('.option');
+            
+            options[correct].classList.add('correct');
+            if(selectedOption === correct) {
+                score++;
+                document.getElementById('score').textContent = score;
+            } else {
+                options[selectedOption].classList.add('incorrect');
+            }
+            
+            document.getElementById('explanation').classList.add('show');
+            answered = true;
+            document.getElementById('check-btn').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'inline-block';
+        }
+        
+        function nextQuestion() {
+            currentQuestion++;
+            if(currentQuestion < questions.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+        
+        function showResults() {
+            const percentage = (score / questions.length) * 100;
+            let badge, feedback;
+            
+            if(percentage >= 90) {
+                badge = 'badge-excellent';
+                feedback = '¡Excelente! Dominas la Metodología de Diseño y Gestión de Proyectos. ¡Listo para aplicarlo! 🎓';
+            } else if(percentage >= 75) {
+                badge = 'badge-good';
+                feedback = '¡Muy bien! Tienes un buen conocimiento. Repasa algunos conceptos específicos. 👍';
+            } else if(percentage >= 60) {
+                badge = 'badge-fair';
+                feedback = 'Buen progreso. Revisa los temas donde tuviste dificultades. 📚';
+            } else {
+                badge = 'badge-poor';
+                feedback = 'Necesitas estudiar más el material. Repasa la guía y vuelve a intentar. 💪';
+            }
+            
+            document.getElementById('final-score').textContent = `${score}/${questions.length}`;
+            document.getElementById('badge').className = 'performance-badge ' + badge;
+            document.getElementById('badge').textContent = Math.round(percentage) + '%';
+            document.getElementById('feedback').textContent = feedback;
+            document.getElementById('overlay').classList.add('show');
+            document.getElementById('result-modal').classList.add('show');
+        }
+        
+        function closeModal() {
+            document.getElementById('overlay').classList.remove('show');
+            document.getElementById('result-modal').classList.remove('show');
+        }
+        
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById('score').textContent = '0';
+            closeModal();
+            loadQuestion();
+        }
+        
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProgress('inicio');
+        });
+    </script>
+</body>
+</html>
